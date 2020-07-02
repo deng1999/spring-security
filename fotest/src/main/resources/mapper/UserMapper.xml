@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deng.mapper.UserMapper">
+    <select id="loadUserByUsername" parameterType="String" resultType="com.deng.entity.ForUser">
+        SELECT * FROM for_user WHERE username=#{username}
+    </select>
+<insert id="insertUser" parameterType="com.deng.entity.ForUser" useGeneratedKeys="true" keyProperty="uid">
+    insert into for_user set username=#{username},password=#{password},nickname=#{nickname}
+</insert>
+    <select id="getUserAll"  resultType="com.deng.entity.ForUser">
+        select * from for_user
+    </select>
+    <delete id="deleteUserByUid" parameterType="int">
+        DELETE FROM for_user WHERE uid=#{uid}
+    </delete>
+    <delete id="deleteUserRolesByUid" parameterType="int">
+        delete from for_user_role where user_id=#{uid}
+    </delete>
+    <select id="getUserByUsername" parameterType="String" resultType="com.deng.entity.ForUser">
+        SELECT * FROM for_user WHERE username=#{username}
+    </select>
+    <select id="getUserByUid" parameterType="int" resultType="com.deng.entity.ForUser">
+        SELECT * FROM for_user WHERE uid=#{uid}
+    </select>
+    <update id="updateByUsername" parameterType="com.deng.entity.ForUser" >
+        update for_user set password=#{password} where username=#{username}
+    </update>
+    <select id="findRolesByUid" parameterType="int" resultType="int">
+        select r.rid from for_role r,for_user_role ru where r.rid=ru.role_id and ru.user_id=#{uid}
+    </select>
+<insert id="addRoles" >
+    insert into for_user_role values (#{user_id},#{role_id})
+</insert>
+</mapper>

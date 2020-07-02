@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deng.mapper.RolesMapper">
+    <select id="getRolesByUid" parameterType="int" resultType="com.deng.entity.ForRole">
+        select r.* from for_role r,for_user_role ru where r.rid=ru.role_id and ru.user_id=#{uid}
+    </select>
+    <select id="getRoleAll" resultType="com.deng.entity.ForRole">
+        select * from for_role
+    </select>
+    <delete id="deleteByRid" parameterType="int">
+        delete from for_role where rid=#{rid}
+    </delete>
+    <delete id="deleteRoleUserByRid" parameterType="int">
+        delete from for_user_role where role_id=#{rid}
+    </delete>
+    <insert id="insertRole" parameterType="com.deng.entity.ForRole" useGeneratedKeys="true" keyProperty="rid">
+    insert into for_role set name=#{name},description=#{description}
+</insert>
+
+</mapper>
