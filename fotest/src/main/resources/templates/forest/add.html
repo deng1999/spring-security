@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <link href="../../../static/asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../../static/asserts/css/dashboard.css" th:href="@{/static/asserts/css/dashboard.css}" rel="stylesheet">
+
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="~{commons/bar::topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{commons/bar::#sidebar(activeUri='getForest')}"></div>
+
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="table-responsive">
+                <h1>滁州市各县区林业资源收集</h1>
+                <div>
+                    <div class="form‐group" sec:authorize="hasAnyRole('ROLE_GUEST','ROLE_CHUZHOU')">
+                        <label>滁州市区</label>
+                        <a class="btn btn-sm btn-primary" th:href="@{/insertByforest}">收集</a>
+                    </div>
+                    <div class="form‐group" sec:authorize="hasAnyRole('ROLE_GUEST','ROLE_TIANCHANG')">
+                        <label>天长市</label>
+                        <a class="btn btn-sm btn-primary" th:href="@{/insertByTforest}">收集</a>
+                    </div>
+                    <div class="form‐group" sec:authorize="hasAnyRole('ROLE_GUEST','ROLE_MINGGUANG')">
+                        <label>明光市</label>
+                        <a class="btn btn-sm btn-primary" th:href="@{/insertByMforest}">收集</a>
+                    </div>
+                    <div class="form‐group" sec:authorize="hasAnyRole('ROLE_GUEST','ROLE_DINGYUAN')">
+                        <label>定远县</label>
+                        <a class="btn btn-sm btn-primary" th:href="@{/insertByDforest}">收集</a>
+                    </div>
+                    <div class="form‐group" sec:authorize="hasAnyRole('ROLE_GUEST','ROLE_LAIAN')">
+                        <label>来安县</label>
+                        <a class="btn btn-sm btn-primary" th:href="@{/insertByLforest}">收集</a>
+                    </div>
+                    <div class="form‐group" sec:authorize="hasAnyRole('ROLE_GUEST','ROLE_QUANJIAO')">
+                        <label>全椒县</label>
+                        <a class="btn btn-sm btn-primary" th:href="@{/insertByQforest}">收集</a>
+                    </div>
+                    <div class="form‐group" sec:authorize="hasAnyRole('ROLE_GUEST','ROLE_FENGYANG')">
+                        <label>凤阳县</label>
+                        <a class="btn btn-sm btn-primary" th:href="@{/insertByYforest}">收集</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script type="text/javascript" src="/js/popper.min.js" th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
+<script type="text/javascript" src="../../../static/asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="/js/feather.min.js" th:src="@{/static/asserts/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+
+</body>
+
+</html>

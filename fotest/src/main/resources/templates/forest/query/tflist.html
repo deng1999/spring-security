@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <link href="../../../static/asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../../static/asserts/css/dashboard.css" th:href="@{/static/asserts/css/dashboard.css}" rel="stylesheet">
+
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="~{commons/bar::topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{commons/bar::#sidebar(activeUri='forestList')}"></div>
+
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div>
+                <div><h3>天长市林业资源情况</h3></div>
+                <img th:src="@{/asserts/img/tianchang1.jpg}" th:width="680px" th:height="230px">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>林区名称</th>
+                        <th>林区面积(平方千米)</th>
+                        <th>经度</th>
+                        <th>纬度</th>
+                        <th>图片</th>
+                        <th sec:authorize="hasAnyRole('ROLE_GUEST','ROLE_TIANCHANG')">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="for:${forest}">
+                        <td th:text="${for.getTid()}"></td>
+                        <td th:text="${for.getForestName()}"></td>
+                        <td th:text="${for.getForestArea()}"></td>
+                        <td th:text="${for.getLongitude()}"></td>
+                        <td th:text="${for.getLatitude()}"></td>
+                        <td ><img th:src="@{'/asserts/img/'+${for.getImage()}}" th:width="100px" th:height="80px"></td>
+                        <td sec:authorize="hasAnyRole('ROLE_GUEST','ROLE_TIANCHANG')">
+                            <a class="btn btn-sm btn-primary" th:href="@{/updatetByArea/}+${for.getTid()}">修改</a>
+                            <form method="post" th:action="@{/deleteTforest/}+${for.getTid()}">
+                                <button type="submit" class="btn btn-sm btn-danger deleteBtn" >删除</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <p>
+                    <strong>当前是第：[[${fenye.pageNum }]] 页</strong>
+                    <strong>一共有：[[${fenye.pages }]] 页</strong>
+                    <strong>总记录数：[[${fenye.total }]] 条</strong>
+
+                    <button id="homePage" style="margin-left: 220px">首页</button>
+                    <button id="top">上一页</button>
+                    <button id="bottom">下一页</button>
+                    <button id="LastPage">末页</button>
+                </p>
+                <p> &nbsp;</p>
+            </div>
+        </main>
+    </div>
+</div>
+<script type="text/javascript" src="/static/asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script th:inline="javascript">
+    $("#homePage").click(function () {
+        window.location.href="/getTforest";
+    });
+
+    $("#top").click(function () {
+        if("[[${fenye.pageNum}]]">1){
+            window.location.href="/getTforest?pageNo="+[[${fenye.pageNum-1}]];
+        }else if("[[${fenye.pageNum}]]"==1) {
+            alert("当前已是最前页");
+        }
+    });
+
+    $("#bottom").click(function () {
+        if("[[${fenye.pageNum}]]"<"[[${fenye.pages}]]"){
+            window.location.href="/getTforest?pageNo="+[[${fenye.pageNum+1}]];
+        }else if("[[${fenye.pageNum}]]"=="[[${fenye.pages}]]") {
+            alert("当前已是最后页");
+        }
+    });
+
+    $("#LastPage").click(function () {
+        window.location.href="/getTforest?pageNo="+[[${fenye.pages}]];
+    });
+</script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script type="text/javascript" src="/js/popper.min.js" th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
+<script type="text/javascript" src="../../../static/asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="/js/feather.min.js" th:src="@{/static/asserts/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+
+</body>
+
+</html>

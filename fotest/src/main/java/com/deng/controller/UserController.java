@@ -4,6 +4,8 @@ import com.deng.entity.ForRole;
 import com.deng.entity.ForUser;
 import com.deng.service.RoleService;
 import com.deng.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.annotation.Secured;
@@ -34,6 +36,10 @@ public class UserController {
     @RequestMapping("/logout")
     public void logout(){
     }
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
+    }
     @RequestMapping("/query")
     public String getUserByUsername(@RequestParam("username") String usename,Model model){
         ForUser userByUsername = userService.getUserByUsername(usename);
@@ -42,9 +48,12 @@ public class UserController {
     }
    @GetMapping("/users")
    @Secured("ROLE_GUEST")
-    public String getAll(Model model){
+    public String getAll(@RequestParam(required = false,defaultValue = "1") Integer pageNo, Model model){
+       PageHelper.startPage(pageNo,2);
        List<ForUser> userAll = userService.getUserAll();
+       PageInfo pageInfo=new PageInfo(userAll);
        model.addAttribute("emps",userAll);
+       model.addAttribute("fenye",pageInfo);
        return "user/list";
    }
     @RequestMapping("/delete/{uid}")

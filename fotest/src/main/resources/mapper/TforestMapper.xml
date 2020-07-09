@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deng.mapper.TforestMapper">
+    <select id="getForestAll" resultType="com.deng.entity.ForTforest">
+        select * from for_tforest
+    </select>
+    <select id="getForest" parameterType="int" resultType="com.deng.entity.ForTforest">
+        select * from for_tforest where tid=#{tid}
+    </select>
+    <insert id="insertByForest" parameterType="com.deng.entity.ForTforest" useGeneratedKeys="true" keyProperty="tid">
+        insert into for_tforest set forest_name=#{forestName},forest_area=#{forestArea},longitude=#{longitude},latitude=#{latitude},image=#{image}
+    </insert>
+    <delete id="deleteByForest" parameterType="int">
+        delete from for_tforest where tid=#{tid}
+    </delete>
+    <update id="updateByArea" parameterType="com.deng.entity.ForTforest">
+        update for_tforest set forest_name=#{forestName} ,forest_area=#{forestArea},image=#{image} where tid=#{tid}
+    </update>
+</mapper>
